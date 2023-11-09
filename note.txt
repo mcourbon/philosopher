@@ -1,0 +1,66 @@
+
+/* void	thread_function(void *arg)
+{
+	pthread_mutex_lock(&mutex);
+	...;
+	pthread_mutex_unlock(&mutex);
+
+	return NULL
+} */
+
+/* int	main(int ac, char **av)
+{
+	pthread_t		thread1;
+	pthread_t		thread2;
+	pthread_mutex_t	mutex;
+
+	pthread_mutex_init(&mutex, NULL);
+
+	pthread_create(&thread1, NULL, thread_function, NULL);
+	pthread_create(&thread2, NULL, thread_function, NULL);
+
+	pthread_join(thread1, NULL);
+	pthread_join(thread2, NULL);
+
+	pthread_mutex_destroy(&mutex);
+	return 0;
+} */
+
+
+thread      =       séquence d'instruction (un main est un thread principal)
+
+mutex       =       "mutual exclusion" -> Sécurité pour qu'un seul thread s'éxécute à la fois, évite les conflits
+                    Système de vérouillage et dévérouillage
+                    
+sémaphore   =       mutex mais qui peut prendre plusieurs threads et créer une liste d'attendre
+                    Système de renvoie de valeur 'P' où 'V'
+                
+
+
+int		pthread_join(pthread_t thread, void **value_ptr);
+
+pthread_join    =       permet d'attendre la fin d'un thread spécifique
+                        (pthread(thread1, NULL) va permettre d'attendre la fin de l'éxécution du thread 1 
+                        afin d'éviter que le main ou d'autre threads continuent et renvoie la valeur NULL,
+                        si besoin de la valeur de retour mettre un pointeur ** par ex pour sécuriser 
+                        si != 0 alors ça a échoué)
+    
+
+int		pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg):
+
+pthread_create  =       utilisé pour créer un thread. Prend en arguement :
+                        - un pointeur vers une variable de type pthread_t
+                        - attr qui est un pointeur vers la structure définissant les attributs du thread 
+                        (mettre NULL si valeur par défaut)
+                        - start_routine un pointeur vers la fonction que le thread exécutera, la fonction
+                        est de type void et renvoie un void
+                        - arg un pointeur vers l'argument que l'on souhaite donner à start_routine
+
+
+int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
+
+pthread_mutex_init  =   initialise un mutex, NULL pour attr par défaut
+
+ft_usleep   =   met en pause l'éxécution du programme pendant la durée stop_ms. Vérifie pendant ce temps
+                status->m_good
+
